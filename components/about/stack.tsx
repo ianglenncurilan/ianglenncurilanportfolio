@@ -88,8 +88,29 @@ export function Stack(): ReactNode {
   const measureRef = useRef<HTMLDivElement | null>(null);
   const chipRefs = useRef<Array<HTMLDivElement | null>>([]);
   const [resetKey, setResetKey] = useState(0);
+  const [hasInView, setHasInView] = useState(false);
+
+  // Trigger physics when stack section is scrolled into view
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setHasInView(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
+    if (!hasInView) return;
+
     const container = containerRef.current;
     const measure = measureRef.current;
     if (!container || !measure) return;
@@ -156,7 +177,7 @@ export function Stack(): ReactNode {
         const minX = WALL_PAD + halfW + 4;
         const maxX = width - WALL_PAD - halfW - 4;
         const x = minX + Math.random() * Math.max(1, maxX - minX);
-        const y = -80 - i * 60 - Math.random() * 120;
+        const y = -100 - i * 65 - Math.random() * 120;
         const body = Bodies.rectangle(x, y, w, h, {
           chamfer: { radius: CHIP_RADIUS },
           restitution: 0.35,
@@ -199,6 +220,26 @@ export function Stack(): ReactNode {
         container.style.cursor = "grab";
       });
 
+      // Apply dynamic physics force on window scroll
+      let lastScrollY = window.scrollY;
+      const handleWindowScroll = (): void => {
+        const currentScrollY = window.scrollY;
+        const deltaY = currentScrollY - lastScrollY;
+        lastScrollY = currentScrollY;
+
+        if (Math.abs(deltaY) > 1) {
+          for (let i = 0; i < states.length; i++) {
+            const s = states[i];
+            if (!s) continue;
+            const forceY = Math.max(-0.008, Math.min(0.008, -deltaY * 0.00015));
+            const forceX = (Math.random() - 0.5) * 0.002;
+            Body.applyForce(s.body, s.body.position, { x: forceX, y: forceY });
+          }
+        }
+      };
+
+      window.addEventListener("scroll", handleWindowScroll, { passive: true });
+
       const runner = Runner.create();
       Runner.run(runner, engine);
 
@@ -238,6 +279,7 @@ export function Stack(): ReactNode {
       ro.observe(container);
 
       cleanup = () => {
+        window.removeEventListener("scroll", handleWindowScroll);
         cancelAnimationFrame(raf);
         ro.disconnect();
         Runner.stop(runner);
@@ -250,7 +292,7 @@ export function Stack(): ReactNode {
       cancelled = true;
       cleanup?.();
     };
-  }, [resetKey]);
+  }, [hasInView, resetKey]);
 
   return (
     <div className="flex flex-col gap-3">
