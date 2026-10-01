@@ -46,7 +46,7 @@ export function ContactButton(): ReactNode {
         copied ? "Email copied" : open ? `Copy ${EMAIL}` : "Show email"
       }
       transition={{ layout: { duration: 0.55, ease: EASE } }}
-      style={{ borderRadius: 12 }}
+      style={{ borderRadius: 12 } as React.CSSProperties}
       className="focus-ring bg-foreground text-background relative inline-flex h-11 cursor-pointer items-center justify-center px-5 text-sm font-medium"
     >
       <motion.span

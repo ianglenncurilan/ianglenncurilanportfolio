@@ -166,7 +166,7 @@ export function Nav(): ReactNode {
                   ? { type: "spring", stiffness: 380, damping: 32 }
                   : { duration: 0 }
               }
-              style={{ left: 0, top: 0, bottom: 0 }}
+              style={{ left: 0, top: 0, bottom: 0 } as React.CSSProperties}
               className="absolute rounded-full bg-foreground/5 ring-1 ring-foreground/8"
             />
           )}

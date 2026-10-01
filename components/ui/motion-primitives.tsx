@@ -44,7 +44,7 @@ export function ScaleUnblur({
       initial={{ opacity: 0, scale: 0.7, filter: "blur(20px)" }}
       animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       transition={{ duration, delay, ease: EASE }}
-      style={{ transformOrigin: "center" }}
+      style={{ transformOrigin: "center" } as React.CSSProperties}
       className={className}
     >
       {children}

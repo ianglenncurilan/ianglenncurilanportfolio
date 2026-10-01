@@ -81,12 +81,12 @@ export function Experience(): ReactNode {
             height: open ? "auto" : collapsedHeight,
           }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          style={{ overflow: "hidden" }}
+          style={{ overflow: "hidden" } as React.CSSProperties}
         >
           <ul className="flex flex-col gap-2">
             {ENTRIES.map((entry) => (
               <li
-                key={`${entry.company}-${entry.period}`}
+                key={`${entry.company}-${entry.role}-${entry.period}`}
                 className="bg-background border-foreground/5 flex items-center gap-4 rounded-3xl border p-2"
                 style={{ minHeight: ROW_HEIGHT }}
               >
@@ -124,7 +124,7 @@ export function Experience(): ReactNode {
                   "linear-gradient(to bottom, transparent 0%, black 80%)",
                 WebkitMaskImage:
                   "linear-gradient(to bottom, transparent 0%, black 80%)",
-              }}
+              } as React.CSSProperties}
             />
           )}
         </AnimatePresence>
