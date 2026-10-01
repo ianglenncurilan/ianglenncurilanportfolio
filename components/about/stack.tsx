@@ -25,6 +25,48 @@ const CHIPS: Chip[] = [
   { label: "shadcn/ui", slug: "shadcnui", bg: "#5b54ff", fg: "#ffffff" },
   { label: "Cursor", slug: "cursor", bg: "#111111", fg: "#ffffff" },
   { label: "GSAP", slug: "gsap", bg: "#0AE448", fg: "#0a0a0a" },
+  {
+    label: "Motion",
+    slug: "motion",
+    bg: "#ffef00",
+    fg: "#ffffff",
+    iconUrl: "/motion.svg",
+  },
+  {
+    label: "WordPress",
+    slug: "wordpress",
+    bg: "#2F74C0",
+    fg: "#ffffff",
+    iconUrl: "/wordpress.svg",
+  },
+  {
+    label: "Antigravity",
+    slug: "antigravity",
+    bg: "#1f1f1f",
+    fg: "#ffffff",
+    iconUrl: "/antigravity.svg",
+  },
+  {
+    label: "PostgreSQL",
+    slug: "postgresql",
+    bg: "#5b54ff",
+    fg: "#ffffff",
+    iconUrl: "/postgresql.svg",
+  },
+  {
+    label: "Cloudflare",
+    slug: "cloudflare",
+    bg: "#F4811F",
+    fg: "#ffffff",
+    iconUrl: "/cloudflare.svg",
+  },
+  {
+    label: "SQLite",
+    slug: "sqlite",
+    bg: "#0F80CC",
+    fg: "#ffffff",
+    iconUrl: "/sqlite.svg",
+  },
   { label: "GitHub", slug: "github", bg: "#181717", fg: "#ffffff" },
   { label: "Vercel", slug: "vercel", bg: "#0a0a0a", fg: "#ffffff" },
   { label: "Tailwind CSS", slug: "tailwindcss", bg: "#2BBCF5", fg: "#ffffff" },
@@ -269,7 +311,7 @@ export function Stack(): ReactNode {
 function ChipPill({ chip }: { chip: Chip }): ReactNode {
   return (
     <div
-      className="dark:ring-1 dark:ring-white/15 inline-flex items-center gap-2 p-1 pr-2 text-[15px] font-medium tracking-tight sm:text-[16px]"
+      className="inline-flex items-center gap-2 p-1 pr-2 text-[15px] font-medium tracking-tight sm:text-[16px] dark:ring-1 dark:ring-white/15"
       style={{
         backgroundColor: chip.bg,
         color: chip.fg,

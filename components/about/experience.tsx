@@ -10,56 +10,45 @@ type Entry = {
   period: string;
   slug?: string;
   brand?: string;
+  logo?: string;
 };
 
 const ENTRIES: Entry[] = [
   {
-    company: "Linear",
-    role: "Senior Design Engineer",
-    period: "Mar 2024 – Present",
+    company: "Center for Human-Computer Interaction, Philippines",
+    role: "Web Developer",
+    period: "Feb 2026 – July 2026",
     slug: "linear",
     brand: "#5E6AD2",
+    logo: "/CHCI_LOGO.png",
   },
   {
-    company: "Vercel",
-    role: "Product Designer",
-    period: "Aug 2022 – Feb 2024",
+    company: "Center for Human-Computer Interaction, Philippines",
+    role: "Technical Writer",
+    period: "Feb 2026 – July 2026",
     slug: "vercel",
     brand: "#0a0a0a",
+    logo: "/CHCI_LOGO.png",
   },
   {
-    company: "Stripe",
-    role: "Design Engineer",
-    period: "Jun 2021 – Jul 2022",
+    company: "Center for Human-Computer Interaction, Philippines",
+    role: "Research Assistant",
+    period: "Feb 2026 – July 2026",
     slug: "stripe",
     brand: "#635BFF",
-  },
-  {
-    company: "Figma",
-    role: "UI Engineer",
-    period: "Sep 2019 – May 2021",
-    slug: "figma",
-    brand: "#A259FF",
-  },
-  {
-    company: "Notion",
-    role: "Product Designer",
-    period: "Jan 2018 – Aug 2019",
-    slug: "notion",
-    brand: "#111111",
-  },
-  {
-    company: "Airbnb",
-    role: "Design Intern",
-    period: "May 2017 – Dec 2017",
-    slug: "airbnb",
-    brand: "#FF5A5F",
+    logo: "/CHCI_LOGO.png",
   },
   {
     company: "Freelance",
-    role: "Designer & Developer",
-    period: "2015 – 2017",
-    brand: "#0AE448",
+    role: "Virtual Assistant",
+    period: "Jan 2024 – Nov 2024",
+    brand: "#A259FF",
+  },
+  {
+    company: "Freelance",
+    role: "Full-Stack Developer",
+    period: "July 2025 – Dec 2025",
+    brand: "#111111",
   },
 ];
 
@@ -177,7 +166,16 @@ function CompanyLogo({ entry }: { entry: Entry }): ReactNode {
         ...(entry.slug ? {} : { backgroundColor: entry.brand }),
       }}
     >
-      {entry.slug ? (
+      {entry.logo ? (
+        <img
+          src={entry.logo}
+          alt=""
+          width={40}
+          height={40}
+          className="h-10 w-10 rounded-lg object-contain"
+          draggable={false}
+        />
+      ) : entry.slug ? (
         <img
           src={`https://cdn.simpleicons.org/${entry.slug}`}
           alt=""

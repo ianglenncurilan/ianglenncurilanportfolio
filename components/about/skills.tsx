@@ -10,6 +10,8 @@ const SKILLS = [
   "Performance Tuning",
   "Accessibility",
   "Visual Identity",
+  "Technical Writing",
+  "Project Management",
 ];
 
 export function Skills(): ReactNode {

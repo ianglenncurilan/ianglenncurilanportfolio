@@ -1,0 +1,24 @@
+<svg viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <clipPath id="antigravity-shape">
+      <path d="M14.0777 13.984C14.945 14.6345 16.2458 14.2008 15.0533 13.0084C11.476 9.53949 12.2349 0 7.79033 0C3.34579 0 4.10461 9.53949 0.527295 13.0084C-0.773543 14.3092 0.635692 14.6345 1.50293 13.984C4.86344 11.7076 4.64663 7.69664 7.79033 7.69664C10.934 7.69664 10.7172 11.7076 14.0777 13.984Z"/>
+    </clipPath>
+    <filter id="antigravity-blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+    <radialGradient id="antigravity-yellow"><stop stop-color="#FFE432"/><stop offset="1" stop-color="#FBBC04"/></radialGradient>
+    <radialGradient id="antigravity-red"><stop stop-color="#FC413D"/><stop offset="1" stop-color="#FF6B4A"/></radialGradient>
+    <radialGradient id="antigravity-green"><stop stop-color="#00D66B"/><stop offset="1" stop-color="#00B95C"/></radialGradient>
+    <radialGradient id="antigravity-blue"><stop stop-color="#749BFF"/><stop offset="1" stop-color="#3186FF"/></radialGradient>
+  </defs>
+  <g clip-path="url(#antigravity-shape)" filter="url(#antigravity-blur)">
+    <circle cx="3" cy="0" r="4" fill="url(#antigravity-yellow)"/>
+    <circle cx="14" cy="2" r="5" fill="url(#antigravity-red)"/>
+    <circle cx="1" cy="5" r="5" fill="url(#antigravity-green)"/>
+    <circle cx="3" cy="8" r="4" fill="url(#antigravity-green)"/>
+    <circle cx="12" cy="14" r="5" fill="url(#antigravity-blue)"/>
+    <circle cx="7" cy="0" r="5" fill="url(#antigravity-yellow)"/>
+    <circle cx="8" cy="7" r="5" fill="url(#antigravity-blue)"/>
+    <circle cx="14" cy="6" r="5" fill="url(#antigravity-red)"/>
+  </g>
+</svg>
