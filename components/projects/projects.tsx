@@ -1,16 +1,20 @@
+"use client";
+
 import {
   ArrowRight,
+  ArrowUpRight,
   Bot,
   Compass,
+  Flag,
   Layers,
   LineChart,
   Sparkles,
-  Wand2,
 } from "lucide-react";
-import type { ComponentType, ReactNode } from "react";
+import { useState, type ComponentType, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import { ProjectModal } from "@/components/projects/project-modal";
 import { FadeIn } from "@/components/ui/motion-primitives";
 
 /**
@@ -19,7 +23,17 @@ import { FadeIn } from "@/components/ui/motion-primitives";
  * Replace these with your own work before shipping.
  */
 
-type Project = {
+export type ProjectDetails = {
+  platform: string;
+  overview: string;
+  highlights: string[];
+  video?: {
+    src: string;
+    caption?: string;
+  };
+};
+
+export type Project = {
   id: string;
   icon: ComponentType<{ className?: string }>;
   iconLabel: string;
@@ -29,6 +43,8 @@ type Project = {
   imageRatio: number;
   image: string;
   imageAlt: string;
+  href?: string;
+  details?: ProjectDetails;
 };
 
 const PROJECTS: Project[] = [
@@ -72,18 +88,32 @@ const PROJECTS: Project[] = [
     imageAlt: "Rhythm calm analytics mockup",
   },
   {
-    id: "groove",
-    icon: Wand2,
-    iconLabel: "Groove",
+    id: "mini-miii-prep-golf-charity",
+    icon: Flag,
+    iconLabel: "Mini Miii Prep Golf Charity",
     title:
-      "Reimagining the booking flow for a music school, asisting thousands of students in finding the right lessons.",
+      "A charity golf tournament site funding personalized tutoring and microschool scholarships for K–12 students.",
     description:
-      "I led a redesign of the lesson booking experience, cutting drop off in half and making the schedule feel like a calendar people actually want to open.",
-    meta: "Lead Designer, 2023",
-    imageRatio: 1024 / 768,
-    image:
-      "https://cdn.dribbble.com/userupload/43955214/file/original-d4cde1de803e84b97d8892e3444c04b0.png?resize=1024x768&vertical=center",
-    imageAlt: "Groove music school booking flow mockup",
+      "Built the digital home for the Mini Miii Education Initiative's Annual Charity Golf Classic with built-in payments, allowing visitors to register foursomes, sponsor, and donate directly in the funnel.",
+    meta: "Full-Stack Developer, 2026",
+    imageRatio: 1,
+    image: "/minimiiprepbg.png",
+    imageAlt: "Mini Miii Prep Golf Charity website mockup",
+    href: "https://minimiiiedu.org/landing",
+    details: {
+      platform: "GoHighLevel (GHL)",
+      overview:
+        "This website was built in GoHighLevel (GHL) to give the Mini Miii Education Initiative a fast, conversion-focused landing experience for their Annual Charity Golf Classic—featuring built-in payment processing so visitors can register, sponsor, and donate directly within the funnel without leaving the site.",
+      highlights: [
+        "Built and styled the responsive event landing page directly in GoHighLevel (GHL) to align with Mini Miii Prep's visual identity.",
+        "Configured built-in payment checkout flows so participants, sponsors, and donors can complete foursome registrations, sponsorship packages, and direct donations right inside the funnel.",
+        "Integrated GHL registration forms with an automated workflow that tags each golf participant, sends a golfer confirmation email, and triggers an admin registration notification.",
+      ],
+      video: {
+        src: "/gemini_generated_video_92439bbc.mp4",
+        caption: "GoHighLevel (GHL) golf registration automation walkthrough",
+      },
+    },
   },
   {
     id: "fieldnote",
@@ -123,6 +153,7 @@ export function Projects({
   withHeadline = false,
   viewMoreVisible = false,
 }: ProjectsProps): ReactNode {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const items = viewMoreVisible ? PROJECTS.slice(0, 4) : PROJECTS;
 
   return (
@@ -142,7 +173,12 @@ export function Projects({
 
         <div className="columns-1 gap-6 md:columns-2 md:gap-7">
           {items.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              onViewDetails={setSelectedProject}
+            />
           ))}
         </div>
 
@@ -161,6 +197,11 @@ export function Projects({
           </div>
         ) : null}
       </div>
+
+      <ProjectModal
+        project={selectedProject}
+        onClose={() => setSelectedProject(null)}
+      />
     </section>
   );
 }
@@ -168,9 +209,11 @@ export function Projects({
 function ProjectCard({
   project,
   index,
+  onViewDetails,
 }: {
   project: Project;
   index: number;
+  onViewDetails: (project: Project) => void;
 }): ReactNode {
   const Icon = project.icon;
   return (
@@ -178,7 +221,7 @@ function ProjectCard({
       delay={Math.min(index * 0.06, 0.3)}
       className="mb-6 break-inside-avoid md:mb-7"
     >
-      <article className="project-card border-foreground/8 bg-background flex cursor-pointer flex-col gap-4 rounded-3xl border p-3 sm:p-3.5">
+      <article className="project-card border-foreground/8 bg-background flex flex-col gap-4 rounded-3xl border p-3 sm:p-3.5">
         <header className="flex items-center gap-2.5 px-1 pt-2">
           <span className="border-foreground/10 bg-background inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border">
             <Icon className="text-foreground h-3.5 w-3.5" aria-hidden="true" />
@@ -213,9 +256,36 @@ function ProjectCard({
           </p>
         </div>
 
-        <p className="text-foreground/50 px-1 pb-2 text-[12px] tracking-tight">
-          {project.meta}
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-2 px-1 pb-2">
+          <p className="text-foreground/50 text-[12px] tracking-tight">
+            {project.meta}
+          </p>
+
+          {project.details || project.href ? (
+            <div className="flex flex-wrap items-center gap-2">
+              {project.details ? (
+                <button
+                  type="button"
+                  onClick={() => onViewDetails(project)}
+                  className="focus-ring border-foreground/10 bg-background text-foreground hover:bg-foreground/5 inline-flex cursor-pointer items-center gap-1.5 rounded-xl border px-3 py-1.5 text-xs font-medium transition-colors"
+                >
+                  View details
+                </button>
+              ) : null}
+              {project.href ? (
+                <a
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="focus-ring bg-foreground text-background inline-flex cursor-pointer items-center gap-1 rounded-xl px-3 py-1.5 text-xs font-medium transition-opacity hover:opacity-90"
+                >
+                  Visit site
+                  <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+                </a>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
       </article>
     </FadeIn>
   );
