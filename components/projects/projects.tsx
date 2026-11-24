@@ -103,7 +103,7 @@ const PROJECTS: Project[] = [
           icon: FileText,
         },
         {
-          title: "Monthly Tuition",
+          title: "Monthly Subscription",
           subtitle: "02 · Secure Payment",
           description:
             "Pay once per month via GHL checkout—subscription memory skips repeat payments all month long.",
@@ -124,9 +124,14 @@ const PROJECTS: Project[] = [
         height: 5702,
         caption: "Full site preview",
       },
+      video: {
+        src: "/gemini_generated_video_3164ba0c.mp4",
+        caption: "GoHighLevel (GHL) enrollment automation walkthrough",
+      },
       highlights: [
         "Designed and built the complete Early Learning Program site in GoHighLevel (GHL) for children ages 9 months to 5 years, including program tiers ($50, $100, and $125/month).",
         "Chained a gated 3-step GHL funnel (Form → Payment → Schedule) with subscription memory so families only pay once per month and avoid duplicate charges.",
+        "Automated post-order GHL workflows per package tier (Little Explorers, Growing Learners, Early Achievers) to apply tags, set remaining sessions, and send onboarding confirmation emails.",
         "Configured live Monday–Thursday (2:00–4:00 PM) 30-minute session booking blocks with an automated remaining-session counter.",
       ],
     },
