@@ -4,7 +4,9 @@ import {
   ArrowRight,
   ArrowUpRight,
   Bot,
-  Compass,
+  CalendarCheck,
+  CreditCard,
+  FileText,
   Flag,
   Layers,
   LineChart,
@@ -23,10 +25,25 @@ import { FadeIn } from "@/components/ui/motion-primitives";
  * Replace these with your own work before shipping.
  */
 
+export type ProjectStep = {
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: ComponentType<{ className?: string }>;
+};
+
 export type ProjectDetails = {
   platform: string;
   overview: string;
   highlights: string[];
+  steps?: ProjectStep[];
+  fullSiteImage?: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    caption?: string;
+  };
   video?: {
     src: string;
     caption?: string;
@@ -62,17 +79,57 @@ const PROJECTS: Project[] = [
     imageAlt: "University Student Government website",
   },
   {
-    id: "atlas",
-    icon: Compass,
-    iconLabel: "Atlas Studio",
-    title: "A two week brand and product sprint for a creative studio.",
+    id: "early-learning-program",
+    icon: CalendarCheck,
+    iconLabel: "Early Learning Program",
+    title:
+      "Early Learning Program — a 3-step enrollment and live session scheduler for early childhood mentorship.",
     description:
-      "End to end identity, marketing site, and a small product surface designed to feel quietly confident across every touchpoint.",
-    meta: "Product & Brand Designer, 2025",
-    imageRatio: 1024 / 768,
-    image:
-      "https://cdn.dribbble.com/userupload/24599416/file/original-1ae5075dcd129aebb16bdbca24b41ac7.png?resize=1024x768&vertical=center",
-    imageAlt: "Atlas Studio brand and product sprint mockup",
+      "Built in GoHighLevel (GHL) for the Mini Miii Education Initiative (ages 9 months to 5 years), guiding families seamlessly from intake form to payment to booking a live session date.",
+    meta: "Full-Stack Developer, 2026",
+    imageRatio: 1,
+    image: "/scheduler3.png",
+    imageAlt: "Early Learning Program live session scheduler preview",
+    details: {
+      platform: "GoHighLevel (GHL)",
+      overview:
+        "Built in GoHighLevel (GHL) for the Mini Miii Education Initiative's Early Learning Program (ages 9 months to 5 years), this booking funnel streamlines enrollment into a structured 3-step scheduler—collecting family intake details, processing payment, and unlocking live calendar date selection for 30-minute afternoon mentorship blocks.",
+      steps: [
+        {
+          title: "Complete Form",
+          subtitle: "01 · Intake",
+          description:
+            "Parents provide student details, contact info, and choose Little Explorers, Growing Learners, or Early Achievers.",
+          icon: FileText,
+        },
+        {
+          title: "Monthly Tuition",
+          subtitle: "02 · Secure Payment",
+          description:
+            "Pay once per month via GHL checkout—subscription memory skips repeat payments all month long.",
+          icon: CreditCard,
+        },
+        {
+          title: "Pick Sessions",
+          subtitle: "03 · Live Calendar",
+          description:
+            "Select available Mon–Thu 30-min slots (2–4 PM) while a live counter tracks remaining weekly sessions.",
+          icon: CalendarCheck,
+        },
+      ],
+      fullSiteImage: {
+        src: "/scheduler2.png",
+        alt: "Full-page preview of the Mini Miii Prep Early Learning Program website",
+        width: 2168,
+        height: 5702,
+        caption: "Full site preview",
+      },
+      highlights: [
+        "Designed and built the complete Early Learning Program site in GoHighLevel (GHL) for children ages 9 months to 5 years, including program tiers ($50, $100, and $125/month).",
+        "Chained a gated 3-step GHL funnel (Form → Payment → Schedule) with subscription memory so families only pay once per month and avoid duplicate charges.",
+        "Configured live Monday–Thursday (2:00–4:00 PM) 30-minute session booking blocks with an automated remaining-session counter.",
+      ],
+    },
   },
   {
     id: "rhythm",
