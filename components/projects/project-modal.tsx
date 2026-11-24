@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpRight, Layers, X } from "lucide-react";
+import { ArrowUpRight, ChevronsRight, Layers, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import Image from "next/image";
 import { useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
@@ -79,7 +79,7 @@ export function ProjectModal({
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.97 }}
             transition={{ duration: 0.35, ease: EASE }}
-            className="border-foreground/10 bg-background text-foreground relative my-auto flex max-h-[90vh] w-full max-w-xl flex-col overflow-hidden rounded-3xl border shadow-2xl"
+            className="border-foreground/10 bg-background text-foreground relative my-auto flex max-h-[90vh] w-full max-w-2xl flex-col overflow-hidden rounded-3xl border shadow-2xl"
           >
             <div className="border-foreground/8 flex items-center justify-between gap-3 border-b px-5 py-4 sm:px-6">
               <div className="flex items-center gap-2.5">
@@ -145,6 +145,97 @@ export function ProjectModal({
                   {details.overview}
                 </p>
               </div>
+
+              {details.steps && details.steps.length > 0 ? (
+                <div className="border-foreground/8 bg-foreground/3 flex flex-col gap-3.5 rounded-2xl border p-4 sm:p-5">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-foreground text-xs font-medium tracking-wide uppercase">
+                      3-Step Scheduler Process
+                    </p>
+                    <span className="text-foreground/50 text-[11px] font-medium tracking-tight">
+                      Form → Payment → Schedule
+                    </span>
+                  </div>
+
+                  <ol className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-2.5">
+                    {details.steps.map((step, idx) => {
+                      const StepIcon = step.icon;
+                      const isLast = idx === details.steps!.length - 1;
+                      return (
+                        <li
+                          key={step.title}
+                          className="border-foreground/10 bg-background relative flex flex-col gap-2.5 rounded-xl border p-3.5 shadow-2xs"
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-2.5">
+                              <span className="bg-foreground text-background inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full">
+                                <StepIcon
+                                  className="h-3.5 w-3.5"
+                                  aria-hidden="true"
+                                />
+                              </span>
+                              <div className="min-w-0">
+                                <span className="text-foreground/50 block text-[10px] font-medium tracking-wider uppercase">
+                                  {step.subtitle}
+                                </span>
+                                <span className="text-foreground block text-sm font-semibold tracking-tight">
+                                  {step.title}
+                                </span>
+                              </div>
+                            </div>
+
+                            {!isLast ? (
+                              <ChevronsRight
+                                className="text-foreground/35 hidden h-4 w-4 shrink-0 sm:block"
+                                aria-hidden="true"
+                              />
+                            ) : null}
+                          </div>
+
+                          <p className="text-foreground/70 text-xs leading-relaxed">
+                            {step.description}
+                          </p>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                </div>
+              ) : null}
+
+              {details.fullSiteImage ? (
+                <div className="border-foreground/8 bg-foreground/3 flex flex-col gap-2.5 rounded-2xl border p-4">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-foreground text-xs font-medium tracking-wide uppercase">
+                      {details.fullSiteImage.caption ?? "Full site preview"}
+                    </p>
+                    <a
+                      href={details.fullSiteImage.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="focus-ring text-foreground/65 hover:text-foreground inline-flex items-center gap-1 rounded-md text-[11px] font-medium tracking-tight transition-colors"
+                    >
+                      Open full image
+                      <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
+                    </a>
+                  </div>
+                  <div
+                    data-lenis-prevent
+                    className="ring-foreground/8 bg-background max-h-[460px] overflow-y-auto rounded-xl ring-1"
+                  >
+                    <Image
+                      src={details.fullSiteImage.src}
+                      alt={details.fullSiteImage.alt}
+                      width={details.fullSiteImage.width}
+                      height={details.fullSiteImage.height}
+                      sizes="(min-width: 640px) 620px, 92vw"
+                      className="block h-auto w-full"
+                    />
+                  </div>
+                  <p className="text-foreground/50 text-[11px] tracking-tight">
+                    Scroll inside the frame to view the full landing page.
+                  </p>
+                </div>
+              ) : null}
 
               {details.video ? (
                 <div className="border-foreground/8 bg-foreground/3 flex flex-col gap-2.5 rounded-2xl border p-4">
